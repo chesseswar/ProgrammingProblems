@@ -10,14 +10,21 @@ public class FourD {
     }
 }
 
-class Dim {
-    int w, x, y, z;
+class Dim implements Comparable<Dim>{
+    int[] dims;
+    int[] sorted;
     public Dim(int w, int x, int y, int z){
-        this.w = w;
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        sorted = new int[]{w, x, y, z};
+        dims = sorted;
+        Arrays.sort(sorted);
     }
 
+    public int compareTo(Dim other){
+        for (int i = 0; i < 4; i++){
+            if (!(sorted[i] > other.sorted[i])){
 
+            }
+        }
+        return 1;
+    }
 }
