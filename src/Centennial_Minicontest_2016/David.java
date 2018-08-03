@@ -8,19 +8,30 @@ public class David {
         Scanner in = new Scanner(new File("input.txt"));
         //Scanner in = new Scanner(System.in);
         int numFiles = in.nextInt();
-        //Name[] files =
-        while (numFiles-- > 0){
-
+        in.nextLine();
+        ArrayList<Name> files = new ArrayList<>();
+        for(int i = 0; i < numFiles; i++){
+            files.add(new Name(in.nextLine()));
+        }
+        Collections.sort(files);
+        for (Name n : files){
+            System.out.println(n.str);
         }
     }
 }
 
 class Name implements Comparable<Name>{
+    String str;
     String data;
     String extension;
     public Name(String input){
-        data = input;
-        extension = data.substring(data.length()-3);
+        str = input;
+        if (str.substring(0,3).toLowerCase().equals("the")){
+            data = str.substring(3);
+        } else {
+            data = str;
+        }
+        extension = data.substring(data.length()-3,data.length());
     }
 
     public int compareTo(Name other){
