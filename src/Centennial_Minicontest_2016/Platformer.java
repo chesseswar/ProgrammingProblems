@@ -21,6 +21,7 @@ public class Platformer {
                 plane[i][j] = true;
             }
         }
+
         for (int i = secondy1; i >= secondy2; i--){
             for (int j = secondx1; j <= secondx2; j++){
                 if (plane[i][j]){
