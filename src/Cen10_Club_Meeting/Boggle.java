@@ -29,55 +29,35 @@ public class Boggle {
             int points = 0;
             for (int word = 0; word < numWords; word++) {
                 String input = in.next();
-                boolean done = false;
-                int i = 0;
-                while (i < map.length){
-                    int j = 0;
-                    while (j < map[0].length){
-                        if (map[i][j].c == input.charAt(0)) {
-                            ArrayDeque<Letter> queue = new ArrayDeque<>();
-                            HashSet<Letter> visited = new HashSet<>();
-                            map[i][j].index = 0;
-                            map[i][j].str = Character.toString(map[i][j].c);
-                            queue.add(map[i][j]);
-                            while (queue.size() > 0) {
-                                Letter current = queue.poll();
-                                visited.add(current);
-                                if (current.str.equals(input)) {
-                                    int hash;
-                                    if (input.length() > 8) {
-                                        hash = 8;
-                                    } else if (input.length() < 2) {
-                                        hash = 2;
-                                    } else {
-                                        hash = input.length();
-                                    }
-                                    done = true;
-                                    points += pointVals.get(hash);
-                                    break;
-                                }
-                                for (Letter l : adj(current, input, current.index+1, map)) {
-
-                                    if (((!visited.contains(l)) && (current.str + l.c).equals(input)) || (!visited.contains(l) && adj(l,input,current.index+2,map).size() != 0)) {
-                                        l.index = current.index+1;
-                                        l.str = current.str + l.c;
-                                        queue.add(l);
-                                    }
-                                }
-                            }
+                boolean found = false;
+                for (int i = 0; i < 4; i++){
+                    for (int j = 0; j < 4; j++){
+                        if (map[i][j].c == input.charAt(0)){
+                            HashSet<Letter> used = new HashSet<>();
+                            used.add(map[i][j]);
+                            found = find(map[i][j],map,input,1,used,Character.toString(map[i][j].c));
                         }
-
-                        if (done){
+                        if (found){
                             break;
                         }
-                        j++;
                     }
-                    if (done){
+                    if (found){
                         break;
                     }
-                    i++;
+                }
+                int hash = 2;
+                if (found){
+                    if (input.length() < 2){
+                        hash = 2;
+                    } else if (input.length() > 8){
+                        hash = 8;
+                    } else {
+                        hash = input.length();
+                    }
                 }
 
+
+                points += pointVals.get(hash);
             }
 
             System.out.println("PUZZLE #" + puzzle + ": " + points);
@@ -88,21 +68,31 @@ public class Boggle {
         }
     }
 
-    public static String concat(ArrayList<Letter> letters){
-        String output = "";
-        for (Letter l : letters){
-            output += l.c;
+    public static boolean find(Letter start, Letter[][] map, String word, int index, HashSet<Letter> used, String output){
+        String smh = used.toString();
+        for (Letter l : adj(start,word,index,map,used)){
+            if ((output + l.c).equals(word)){
+                return true;
+            }
+
+            used.add(l);
+            if(find(l,map,word,index+1,used,output + l.c)){
+                return true;
+            }
         }
-        return output;
+        used.remove(start);
+        return false;
     }
 
-    public static ArrayList<Letter> adj(Letter start, String word, int index, Letter[][] map){
+    public static ArrayList<Letter> adj(Letter start, String word, int index, Letter[][] map, HashSet<Letter> used){
         int[] x = new int[]{-1,0,1,-1,1,-1,0,1};
         int[] y = new int[]{1,1,1,0,0,-1,-1,-1};
         ArrayList<Letter> output = new ArrayList<>();
         for (int i = 0; i < 8; i++){
             if (start.x + x[i] > -1 && start.x + x[i] < 4 && start.y + y[i] > -1 && start.y + y[i] < 4 && map[start.y + y[i]][start.x + x[i]].c == word.charAt(index)){
-                output.add(map[start.y+y[i]][start.x+x[i]]);
+                if (!used.contains(map[start.y+y[i]][start.x+x[i]])){
+                    output.add(map[start.y+y[i]][start.x+x[i]]);
+                }
             }
         }
 
@@ -123,6 +113,6 @@ class Letter {
     }
 
     public String toString(){
-        return str + " <" + x + "," + y + ">";
+        return c + " <" + x + "," + y + ">";
     }
 }

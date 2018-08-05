@@ -8,14 +8,16 @@ public class TriggyAngles {
     public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(new File("input.txt"));
         //Scanner in = new Scanner(System.in);
-        DecimalFormat df = new DecimalFormat("#.00");
         int numCase = in.nextInt();
         while (numCase-- > 0){
             Triangle t = new Triangle(in.next().charAt(0),in.nextDouble(),in.next().charAt(0),in.nextDouble());
-            if (in.next().equals("A")){
-                System.out.println(df.format(t.A));
+            String angle = in.next();
+            if (angle.equals("A")){
+                System.out.printf("%.2f\n",t.A);
+            } else if (angle.equals("B")){
+                System.out.printf("%.2f\n",t.B);
             } else {
-                System.out.println(df.format(t.B));
+                System.out.println("90.00");
             }
         }
     }
