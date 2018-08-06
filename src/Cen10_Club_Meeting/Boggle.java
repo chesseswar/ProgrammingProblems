@@ -3,7 +3,7 @@ package Cen10_Club_Meeting;
 import java.util.*;
 import java.io.*;
 
-public class Boggle {
+public class  Boggle {
     public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(new File("input.txt"));
         //Scanner in = new Scanner(System.in);
