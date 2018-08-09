@@ -1,14 +1,8 @@
-5 8 8
-Akritiri
-Braslota
-Iconia
-Nibiru
-Quarra
-I D N I K S B A
-Q R B I B Q T T
-U V I N B O B L
-A E K T L I U F
-R F K S I T R W
-R Y A Q F R B U
-A R M R K Z K W
-B I C O N I A A
+1
+0
+1111
+1110111
+111110
+0110
+010111100
+0110010110
