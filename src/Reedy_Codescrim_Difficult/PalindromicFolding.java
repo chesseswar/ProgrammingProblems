@@ -1,5 +1,6 @@
-package Reedy_Codescrim_Difficult;
 
+package Reedy_Codescrim_Difficult;
+/*
 import java.util.*;
 import java.io.*;
 
@@ -41,3 +42,4 @@ public class PalindromicFolding {
         }
     }
 }
+*/
